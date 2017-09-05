@@ -3,7 +3,6 @@ package com.example.demo;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.management.relation.Role;
 import javax.persistence.*;
 import java.util.Collection;
 
