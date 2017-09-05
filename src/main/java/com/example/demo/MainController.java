@@ -47,6 +47,8 @@ public class MainController {
         user.setPassword("pass");
         user.setUsername("jim");
 
+
+        // !!!!
         // FOR THE LOVE OF EVERYTHING HOLY!!!! IT SEEMS YOU MUST ATTACH A COLLECTION OF ROLES HERE, DO NOT ADD INDIVIDUALLY!!!!
         user.setRoles(myRoles);
 
