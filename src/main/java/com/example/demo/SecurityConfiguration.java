@@ -9,24 +9,39 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+//
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeRequests()
+//                .anyRequest().authenticated()
+//                .and()
+//                .formLogin().loginPage("/login").permitAll()
+////                .antMatchers("/").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+////                .antMatchers("/admin").access("hasRole('ROLE_ADMIN')")
+//                .and().httpBasic();
+//    }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+                .antMatchers("/admin").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .and()
-                .httpBasic();
+                .and().formLogin().loginPage("/login").permitAll()
+                .and().httpBasic();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().
-                withUser("userOne").password("passwordOne").roles("USER")
+                withUser("user").password("pass").roles("USER")
 
-        // to add more accounts, chain more
-        .and().withUser("userTwo").password("passwordTwo").roles("USER");
+                // to add more accounts, chain more
+                .and().withUser("userTwo").password("pass").roles("USER")
+
+                // add an admin user
+                .and().withUser("admin").password("pass").roles("ADMIN");
 
 
     }
