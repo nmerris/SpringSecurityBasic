@@ -17,6 +17,11 @@ public class Role {
     private Collection<User> users;
 
 
+    public void addUser(User user) {
+        users.add(user);
+    }
+
+
     public long getId() {
         return id;
     }

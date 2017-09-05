@@ -2,6 +2,8 @@ package com.example.demo;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -40,7 +42,15 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+//    private Collection<Role> roles;
+
     private Collection<Role> roles;
+
+    // add a single role to this user
+//    public void addRole(Role role) {
+//        roles.add(role);
+//    }
+
 
 
     public long getId() {
@@ -94,6 +104,41 @@ public class User {
     public String getUsername() {
         return username;
     }
+
+
+
+
+
+
+
+//
+//
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return null;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return true;
+//    }
+
+
+
+
+
+
+
 
     public void setUsername(String username) {
         this.username = username;

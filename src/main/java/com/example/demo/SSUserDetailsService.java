@@ -25,17 +25,21 @@ public class SSUserDetailsService implements UserDetailsService {
 
 
 
+
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         try {
             User user = userRepository.findByUsername(username);
             if(user == null) {
-                System.out.println("!!!!!!!!!!!!! user not found with username: " + user.toString());
+                System.out.println("!!!!!!!!!!!!! user not found with username: " + user.getUsername());
+//                System.out.println("!!!!!!!!!!!!! user not found with username: " + user.toString());
                 return null;
             }
 
-            System.out.println("============= found user with username: " + user.toString());
+            System.out.println("============= found user with username: " + user.getUsername());
+//            System.out.println("============= found user with username: " + user.toString());
 
             // User here is NOT the same as our User entity
             return new org.springframework.security.core.userdetails.User(user.getUsername(),
