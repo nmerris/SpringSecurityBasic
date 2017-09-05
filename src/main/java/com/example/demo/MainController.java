@@ -16,9 +16,15 @@ public class MainController {
         return "login";
     }
 
-    @RequestMapping("/admin")
-    public String admin(){
-        return "admin";
+
+    @RequestMapping("/secure")
+    public String secure(){
+        return "secure";
     }
+
+//    @RequestMapping("/admin")
+//    public String admin(){
+//        return "admin";
+//    }
 
 }
