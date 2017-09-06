@@ -9,19 +9,19 @@
 
     <form autocomplete="off" action="#" th:action="@{~/register}" th:object="${newUser}" method="post">
 
-        First Name<mark><strong><span th:if="${#fields.hasErrors('firstName')}" th:errors="*.{firstName}"></span></strong></mark>
+        First Name<mark><strong><span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span></strong></mark>
         <input type="text" id="firstName" placeholder="First Name" th:field="*{firstName}"/><br/>
 
-        Last Name<mark><strong><span th:if="${#fields.hasErrors('lastName')}" th:errors="*.{lastName}"></span></strong></mark>
+        Last Name<mark><strong><span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span></strong></mark>
         <input type="text" id="lastName" placeholder="Last Name" th:field="*{lastName}"/><br/>
        
-        Email<mark><strong><span th:if="${#fields.hasErrors('email')}" th:errors="*.{email}"></span></strong></mark>
+        Email<mark><strong><span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span></strong></mark>
         <input type="text" id="email" placeholder="Email" th:field="*{email}"/><br/>
        
-        User Name<mark><strong><span th:if="${#fields.hasErrors('username')}" th:errors="*.{username}"></span></strong></mark>
+        User Name<mark><strong><span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span></strong></mark>
         <input type="text" id="username" placeholder="User Name" th:field="*{username}"/><br/>
        
-        Password<mark><strong><span th:if="${#fields.hasErrors('password')}" th:errors="*.{password}"></span></strong></mark>
+        Password<mark><strong><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span></strong></mark>
         <input type="text" id="password" placeholder="Password" th:field="*{password}"/><br/>
 
         <button type="submit">Submit</button>

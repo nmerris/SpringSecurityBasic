@@ -19,27 +19,27 @@ public class User {
     private long id;
 
     @Column(name="email", nullable=false)
-//    @Email(message="Please provide a valid email")
-//    @NotEmpty(message="Please provide an email")
+    @Email(message="Please provide a valid email")
+    @NotEmpty(message="Please provide an email")
     private String email;
 
     @Column(name="password")
-//    @NotEmpty(message="Please provide a password")
+    @NotEmpty(message="Please provide a password")
     private String password;
 
     @Column(name="first_name")
-//    @NotEmpty(message="Please provide a first name")
+    @NotEmpty(message="Please provide a first name")
     private String firstName;
 
     @Column(name="last_name")
-//    @NotEmpty(message="Please provide a last name")
+    @NotEmpty(message="Please provide a last name")
     private String lastName;
 
     @Column(name="enabled")
     private boolean enabled;
 
     @Column(name="username")
-//    @NotEmpty(message="Please provide a username")
+    @NotEmpty(message="Please provide a username")
     private String username;
 
     @ManyToMany(fetch = FetchType.EAGER)
