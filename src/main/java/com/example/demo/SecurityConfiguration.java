@@ -32,7 +32,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // whatever string you use when you create Roles and save them to role repo
             .antMatchers("/secure").access("hasRole('ROLE_ADMIN')")
             .antMatchers("/").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-            .antMatchers("/").permitAll() // so anyone can get to default route
+            .antMatchers("/", "/setuprolesandusers").permitAll() // so anyone can get to default route and my manual testing route
             .anyRequest().authenticated()
             .and()
             .formLogin().loginPage("/login").permitAll()

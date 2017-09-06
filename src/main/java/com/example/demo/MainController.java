@@ -23,7 +23,12 @@ public class MainController {
     @RequestMapping("/")
     public String index() {
 
+        return "index";
+    }
 
+
+    @RequestMapping("/setuprolesandusers")
+    public String manualSetup() {
 
         // manually create some users and roles for testing
 
@@ -81,16 +86,13 @@ public class MainController {
 
 
 
-
-
-
         return "index";
     }
 
 
     // this gives us the user details (?) data access object?
     @RequestMapping("/login")
-    public String login(Principal principal){
+    public String login(/*Principal principal*/){
         return "login";
     }
 
