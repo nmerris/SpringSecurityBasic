@@ -3,8 +3,14 @@ package com.example.demo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,6 +24,9 @@ public class MainController {
     @Autowired
     RoleRepository roleRepository;
 
+    @Autowired
+    UserService userService;
+
 
 
     @RequestMapping("/")
@@ -27,6 +36,41 @@ public class MainController {
     }
 
 
+    // displays a form to register a new user, passes a new User to the form
+    @GetMapping("/register")
+    public String showRegistrationPage(Model model) {
+        model.addAttribute("newUser", new User());
+        return "registraion";
+    }
+
+    @PostMapping("/register")
+    public String processRegistration(@Valid @ModelAttribute("newUser") User user,
+                                      BindingResult bindingResult,
+                                      Model model) {
+
+        // always add the incoming user back to the model
+        model.addAttribute("newUser", user);
+
+        if(bindingResult.hasErrors()) {
+            return "registration";
+        }
+        else {
+            userService.saveUser(user);
+            model.addAttribute("message", "ROLE_USER account successfully created!");
+        }
+
+        // need this to compile, should never happen
+        return "redirect:/";
+
+    }
+
+
+
+
+
+
+
+    // don't hit this route more than once per session, testing only!!
     @RequestMapping("/setuprolesandusers")
     public String manualSetup() {
 
