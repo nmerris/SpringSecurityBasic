@@ -6,6 +6,7 @@
 </head>
 <body>
     <h3> Register a new user</h3>
+    <h4 th:text="${message}"></h4>
 
     <form autocomplete="off" action="#" th:action="@{~/register}" th:object="${newUser}" method="post">
 
@@ -23,6 +24,12 @@
        
         Password<mark><strong><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span></strong></mark>
         <input type="text" id="password" placeholder="Password" th:field="*{password}"/><br/>
+
+        Select a ROLE
+        <select name="selectedRole">
+            <option value="ROLE_USER">User</option>
+            <option value="ROLE_ADMIN">Admin</option>
+        </select>
 
         <button type="submit">Submit</button>
 

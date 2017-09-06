@@ -5,10 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -30,7 +27,10 @@ public class MainController {
 
 
     @RequestMapping("/")
-    public String index() {
+    public String index(Model model) {
+
+        model.addAttribute("message", "Welcome to Spring Security Test app");
+
         return "index";
     }
 
@@ -42,10 +42,14 @@ public class MainController {
         return "registration";
     }
 
+    // the selected role comes in as a request param from the form, can't be null because User is preselected
     @PostMapping("/register")
-    public String processRegistration(@Valid @ModelAttribute("newUser") User user,
+    public String processRegistration(@RequestParam(value = "selectedRole") String role,
+                                      @Valid @ModelAttribute("newUser") User user,
                                       BindingResult bindingResult,
                                       Model model) {
+
+        System.out.println("####################### incoming role String is: " + role);
 
         // always add the incoming user back to the model
         model.addAttribute("newUser", user);
@@ -54,12 +58,18 @@ public class MainController {
             return "registration";
         }
         else {
-            userService.saveUser(user);
-            model.addAttribute("message", "ROLE_USER account successfully created!");
+            if(role.equals("ROLE_USER")) {
+                userService.saveUser(user);
+                model.addAttribute("message", "ROLE_USER account successfully created!");
+            }
+            else {
+                userService.saveAdmin(user);
+                model.addAttribute("message", "ROLE_ADMIN account successfully created!");
+            }
         }
 
         // need this to compile, should never happen
-        return "redirect:/";
+        return "index";
 
     }
 
@@ -74,7 +84,7 @@ public class MainController {
 
     // don't hit this route more than once per session, testing only!!
     @RequestMapping("/setuprolesandusers")
-    public String manualSetup() {
+    public String manualSetup(Model model) {
 
 
         // clear the tables
@@ -138,7 +148,7 @@ public class MainController {
         user3.addRoles(myRoles);
         userRepository.save(user3);
 
-
+        model.addAttribute("message", "just added 3 users and 2 roles!");
 
         return "index";
     }
