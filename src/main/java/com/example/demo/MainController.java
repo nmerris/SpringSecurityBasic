@@ -40,7 +40,7 @@ public class MainController {
     @GetMapping("/register")
     public String showRegistrationPage(Model model) {
         model.addAttribute("newUser", new User());
-        return "registraion";
+        return "registration";
     }
 
     @PostMapping("/register")
