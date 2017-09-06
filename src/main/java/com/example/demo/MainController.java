@@ -31,7 +31,6 @@ public class MainController {
 
     @RequestMapping("/")
     public String index() {
-
         return "index";
     }
 
@@ -65,7 +64,10 @@ public class MainController {
     }
 
 
-
+    @GetMapping("/userpage")
+    public String userPage() {
+        return "userpage";
+    }
 
 
 
@@ -73,6 +75,14 @@ public class MainController {
     // don't hit this route more than once per session, testing only!!
     @RequestMapping("/setuprolesandusers")
     public String manualSetup() {
+
+
+        // clear the tables
+        // first: delete all users,
+        // then can delete all roles
+        userRepository.deleteAll();
+        roleRepository.deleteAll();
+
 
         // manually create some users and roles for testing
 

@@ -33,7 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             // ROLE_ADMIN is NOT a special thing, it's just convention, the String here must exactly match
             // whatever string you use when you create Roles and save them to role repo
             .antMatchers("/secure").access("hasRole('ROLE_ADMIN')")
-            .antMatchers("/").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+            .antMatchers("/userpage").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
             .antMatchers("/", "/setuprolesandusers", "/register").permitAll() // so anyone can get to default route and my manual testing route
             .anyRequest().authenticated()
             .and()
@@ -41,7 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .and()
             .logout()
             .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-            .logoutSuccessUrl("/login").permitAll().permitAll()
+            .logoutSuccessUrl("/index").permitAll().permitAll()
             .and()
             .httpBasic();
 
