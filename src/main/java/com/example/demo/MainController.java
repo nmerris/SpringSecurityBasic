@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,6 +18,8 @@ public class MainController {
     @Autowired
     RoleRepository roleRepository;
 
+
+
     @RequestMapping("/")
     public String index() {
 
@@ -26,17 +29,15 @@ public class MainController {
 
         // create a user Role
         Role userRole = new Role();
-        userRole.setRole("USER");
+        userRole.setRole("ROLE_USER");
         roleRepository.save(userRole);
 
         // create admin Role
         Role adminRole = new Role();
-        adminRole.setRole("ADMIN");
+        adminRole.setRole("ROLE_ADMIN");
         roleRepository.save(adminRole);
 
-        Set<Role> myRoles = new HashSet<>();
-        myRoles.add(userRole);
-        myRoles.add(adminRole);
+
 
         // create user with username 'jim'
         User user = new User();
@@ -46,65 +47,39 @@ public class MainController {
         user.setLastName("Jimmerson");
         user.setPassword("pass");
         user.setUsername("jim");
-
-
-        // !!!!
-        // FOR THE LOVE OF EVERYTHING HOLY!!!! IT SEEMS YOU MUST ATTACH A COLLECTION OF ROLES HERE, DO NOT ADD INDIVIDUALLY!!!!
-        user.setRoles(myRoles);
-
-//        user.setRoles();
-
+        user.addRole(userRole); // just contains a normal 'user'
         userRepository.save(user);
 
 
-        // I do not believe Role is what I want to add here...???
-//        user.addRole(userRole);
-//        userRepository.save(user);
-//
-//        SSUserDetailsService ssUserDetailsService = new SSUserDetailsService(userRepository);
-//
-//        // this returns a spring security super special User, not the same as my User
-//        UserDetails userDetails = ssUserDetailsService.loadUserByUsername(user.getUsername());
-//
-//        System.out.println("in controller userDetails.getUsername: " + userDetails.getUsername());
+        // create user with username 'bob'
+        User user2 = new User();
+        user2.setEmail("bobsemail@abc.com");
+        user2.setEnabled(true);
+        user2.setFirstName("BobUser");
+        user2.setLastName("Fergulson");
+        user2.setPassword("pass");
+        user2.setUsername("bob");
+        user2.addRole(userRole); // just contains a normal 'user'
+        userRepository.save(user2);
 
-//        userRepository.save(userDetails);
+        // create user with username 'admin'
+        User user3 = new User();
+        user3.setEmail("admin@abc.com");
+        user3.setEnabled(true);
+        user3.setFirstName("AdminFirstName");
+        user3.setLastName("AdminLastName");
+        user3.setPassword("pass");
+        user3.setUsername("admin");
+
+        // make a set of roles now, admin and user, and attach it to admin user
+        HashSet<Role> myRoles = new HashSet<>();
+        myRoles.add(userRole);
+        myRoles.add(adminRole);
+
+        user3.addRoles(myRoles);
+        userRepository.save(user3);
 
 
-//        userRole.addUser(user);
-//        user.addRole(userRole);
-//        userRepository.save(user);
-//        user.addRole(userRole);
-//        userRepository.save(user);
-
-//        userRole.addUser(user);
-//        roleRepository.save(userRole);
-
-//
-//        // create user with username 'bob'
-//        User user2 = new User();
-//        user2.setEmail("bobsemail@abc.com");
-//        user2.setEnabled(true);
-//        user2.setFirstName("BobUser");
-//        user2.setLastName("Fergulson");
-//        user2.setPassword("pass");
-//        user2.setUsername("bob");
-////        user2.addRole(userRole);
-//        userRepository.save(user2);
-//
-//        // create user with username 'admin'
-//        User user3 = new User();
-//        user3.setEmail("admin@abc.com");
-//        user3.setEnabled(true);
-//        user3.setFirstName("AdminFirstName");
-//        user3.setLastName("AdminLastName");
-//        user3.setPassword("pass");
-//        user3.setUsername("admin");
-////        user3.addRole(userRole);
-////        user3.addRole(adminRole);
-//        userRepository.save(user3);
-//
-//
 
 
 
@@ -112,8 +87,10 @@ public class MainController {
         return "index";
     }
 
+
+    // this gives us the user details (?) data access object?
     @RequestMapping("/login")
-    public String login(){
+    public String login(Principal principal){
         return "login";
     }
 

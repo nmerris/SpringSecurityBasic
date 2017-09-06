@@ -28,7 +28,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-            .antMatchers("/", "/h2-console/**").permitAll()
+                // ROLE_ADMIN is NOT a special thing, it's just convention, the String here must exactly match
+                // whatever string you use when you create Roles and save them to role repo
+            .antMatchers("/secure").access("hasRole('ROLE_ADMIN')")
+            .antMatchers("/").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+            .antMatchers("/").permitAll() // so anyone can get to default route
             .anyRequest().authenticated()
             .and()
             .formLogin().loginPage("/login").permitAll()
@@ -67,6 +71,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth
             .userDetailsService(userDetailsServiceBean());
 
+        // the SSUserDetailsService we are using NOW takes the place of this simpler in memory auth.. we need to do
+        // it with SSUserDetailsService and all that jazz, to be able to keep our user and role data in dbs
 //            .inMemoryAuthentication().
 //            withUser("user").password("pass").roles("USER")
 //

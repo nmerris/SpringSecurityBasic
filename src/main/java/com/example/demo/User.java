@@ -7,6 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "USER_DATA    ")
@@ -42,15 +44,33 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-//    private Collection<Role> roles;
-
     private Collection<Role> roles;
+//    private HashSet<Role> roles;
+
+    public User() {
+        roles = new HashSet<>();
+    }
+
 
     // add a single role to this user
-//    public void addRole(Role role) {
-//        roles.add(role);
-//    }
+    public void addRole(Role role) {
+        roles.add(role);
+    }
 
+    // remove a single role from this user
+    public void removeRole(Role role) {
+        roles.remove(role);
+    }
+
+    // add a bunch of roles (maybe from a checkbox)
+    public void addRoles(HashSet<Role> roles) {
+        this.roles.addAll(roles);
+    }
+
+    // remove a bunch of roles (maybe from a checkbox)
+    public void removeRoles(HashSet<Role> roles) {
+        this.roles.removeAll(roles);
+    }
 
 
     public long getId() {
@@ -148,7 +168,7 @@ public class User {
         return roles;
     }
 
-    public void setRoles(Collection<Role> roles) {
+    public void setRoles(HashSet<Role> roles) {
         this.roles = roles;
     }
 }

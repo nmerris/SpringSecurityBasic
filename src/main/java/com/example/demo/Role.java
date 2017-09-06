@@ -2,6 +2,7 @@ package com.example.demo;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 
 @Entity
 public class Role {
@@ -17,10 +18,26 @@ public class Role {
     private Collection<User> users;
 
 
+    public Role() {
+        users = new HashSet<>();
+    }
+
+
     public void addUser(User user) {
         users.add(user);
     }
 
+    public void removeUser(User user) {
+        users.remove(user);
+    }
+
+    public void addUsers(HashSet<User> users) {
+        this.users.addAll(users);
+    }
+
+    public void removeUsers(HashSet<User> users) {
+        this.users.removeAll(users);
+    }
 
     public long getId() {
         return id;
@@ -42,7 +59,7 @@ public class Role {
         return users;
     }
 
-    public void setUsers(Collection<User> users) {
+    public void setUsers(HashSet<User> users) {
         this.users = users;
     }
 }
