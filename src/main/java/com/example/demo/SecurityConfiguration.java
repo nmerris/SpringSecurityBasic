@@ -36,6 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/userpage").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
             .antMatchers("/", "/setuprolesandusers", "/register").permitAll() // so anyone can get to default route and my manual testing route
             .anyRequest().authenticated()
+
             .and()
             .formLogin().loginPage("/login").permitAll()
             .and()

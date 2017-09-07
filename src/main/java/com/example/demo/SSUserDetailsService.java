@@ -39,7 +39,7 @@ public class SSUserDetailsService implements UserDetailsService { // Spring Secu
                 return null;
             }
 
-            System.out.println("============= found user with username: " + user.getUsername());
+            System.out.println("============= inside SSUserDetailsService.loadUserByUsername... found user with username: " + user.getUsername());
 //            System.out.println("============= found user with username: " + user.toString());
 
             // User here is NOT the same as our User entity
@@ -65,7 +65,7 @@ public class SSUserDetailsService implements UserDetailsService { // Spring Secu
             authorities.add(grantedAuthority);
         }
 
-        System.out.println("==================== user authorities are: " + authorities.toString());
+        System.out.println("==================== inside SSUserDetailsService.loadUserByUsername... user authorities are: " + authorities.toString());
         return authorities;
     }
 

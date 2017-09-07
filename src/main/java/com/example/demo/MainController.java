@@ -49,7 +49,7 @@ public class MainController {
                                       BindingResult bindingResult,
                                       Model model) {
 
-        System.out.println("####################### incoming role String is: " + role);
+        System.out.println("####################### /register POST... incoming role String is: " + role);
 
         // always add the incoming user back to the model
         model.addAttribute("newUser", user);
